@@ -1,0 +1,29 @@
+
+
+CREATE COMPUTE MODULE getAll_Compute1
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE apiResponseRef REFERENCE TO InputRoot.JSON.Data;
+		SET Environment.ZEROXG.API = apiResponseRef;
+		
+		CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE finalResponse REFERENCE TO  OutputRoot.JSON.Data;
+		
+		CREATE FIELD finalResponse.countries IDENTITY (JSON.Array) countries;
+		
+		DECLARE countriesRef REFERENCE TO finalResponse.countries;
+		DECLARE auxRef REFERENCE TO countriesRef ;
+		
+		DECLARE resultContriesRef REFERENCE TO apiResponseRef;
+		
+		FOR itemInArray AS resultContriesRef.Item[] do
+			CREATE LASTCHILD OF countriesRef as auxRef NAME 'Item';
+			SET auxRef.officialName = itemInArray.name.official;
+			SET auxRef.commonName = itemInArray.name.common;
+			SET auxRef.capital = itemInArray.capital;
+		END FOR;
+		
+		RETURN TRUE;
+	END;
+END MODULE;

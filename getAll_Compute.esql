@@ -1,0 +1,11 @@
+
+
+CREATE COMPUTE MODULE getAll_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = 'https://restcountries.com/v3.1/all';
+		SET OutputLocalEnvironment.Destination.HTTP.RequestLine.Method = 'GET';
+		SET OutputLocalEnvironment.Destination.HTTPRequestHeader."Content-Type" = 'application/json';
+		RETURN TRUE;
+	END;
+END MODULE;

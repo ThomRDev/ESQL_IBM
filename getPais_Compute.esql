@@ -1,0 +1,29 @@
+
+
+CREATE COMPUTE MODULE getPais_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+		DECLARE refInput REFERENCE TO InputLocalEnvironment;
+		DECLARE country CHARACTER refInput.REST.Input.Parameters.nombre;
+
+		SET Environment.ZEROXG.nombre = country;
+		
+		-- response en json
+		CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+		CREATE FIELD OutputRoot.JSON.Data;
+		
+		DECLARE refOuput REFERENCE TO OutputRoot.JSON.Data;
+		
+		SET refOuput.countryName = country;
+		
+		-- response en xml
+		/*
+		CREATE LASTCHILD OF OutputRoot DOMAIN 'XMLNSC';
+		DECLARE refOuput REFERENCE TO OutputRoot.XMLNSC;
+		
+		SET refOuput.countryName = country;
+		*/
+		RETURN TRUE;
+	END;
+END MODULE;

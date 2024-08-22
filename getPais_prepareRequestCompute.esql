@@ -1,0 +1,15 @@
+
+
+CREATE COMPUTE MODULE getPais_prepareRequestCompute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE refInput REFERENCE TO InputLocalEnvironment;
+		DECLARE country CHARACTER refInput.REST.Input.Parameters.nombre;
+		
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = 'https://restcountries.com/v3.1/currency/' || country;
+		SET OutputLocalEnvironment.Destination.HTTP.RequestLine.Method = 'GET';
+		SET OutputLocalEnvironment.Destination.HTTPRequestHeader."Content-Type" = 'application/json';
+		
+		RETURN TRUE;
+	END;
+END MODULE;

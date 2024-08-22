@@ -1,0 +1,47 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "COUNTRIES_API",
+    "version" : "1.0.0",
+    "description" : "COUNTRIES_API"
+  },
+  "paths" : {
+    "/consulta-pais/{nombre}" : {
+      "get" : {
+        "operationId" : "getPais",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve nombre",
+        "parameters" : [ {
+          "required" : true,
+          "name" : "nombre",
+          "in" : "path",
+          "type" : "string"
+        } ]
+      }
+    },
+    "/all" : {
+      "get" : {
+        "operationId" : "getAll",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve all"
+      }
+    }
+  },
+  "basePath" : "/countries_api/v1"
+}
